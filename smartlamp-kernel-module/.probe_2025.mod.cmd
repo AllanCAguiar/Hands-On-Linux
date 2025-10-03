@@ -1,1 +1,1 @@
-cmd_/home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/probe_2025.mod := { echo  /home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/probe_2025.o;  echo; } > /home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/probe_2025.mod
+savedcmd_probe_2025.mod := printf '%s\n'   probe_2025.o | awk '!x[$$0]++ { print("./"$$0) }' > probe_2025.mod

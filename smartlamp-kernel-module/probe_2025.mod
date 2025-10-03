@@ -1,2 +1,1 @@
-/home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/probe_2025.o
-
+./probe_2025.o
