@@ -1,4 +1,4 @@
-obj-m += SUBISTITUA_PELO_NOME_DO_MODULO.o
+obj-m += probe_2025.o
 PWD := $(CURDIR)
 
 all:

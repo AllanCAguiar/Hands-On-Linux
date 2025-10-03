@@ -1,8 +1,9 @@
 // Defina os pinos de LED e LDR
 // Defina uma variável com valor máximo do LDR (4000)
 // Defina uma variável para guardar o valor atual do LED (10)
-int ledPin;
+int ledPin = 22;
 int ledValue;
+bool check = false;
 
 int ldrPin;
 // Faça testes no sensor ldr para encontrar o valor maximo e atribua a variável ldrMax
@@ -10,8 +11,9 @@ int ldrMax;
 
 void setup() {
     Serial.begin(9600);
-    
     pinMode(ledPin, OUTPUT);
+    digitalWrite(ledPin,LOW); // Led inicia apagado.
+
     pinMode(ldrPin, INPUT);
     Serial.printf("SmartLamp Conectado!\n");
     
@@ -19,7 +21,19 @@ void setup() {
 
 // Função loop será executada infinitamente pelo ESP32
 void loop() {
-    delay(100);
+    if(!check){
+        /* Pisca 5x* e permanece apagado*/
+        for(int i = 0; i < 5; i++){
+            digitalWrite(ledPin,HIGH);
+            delay(2000);
+
+            digitalWrite(ledPin, LOW);
+            delay(2000);
+            }
+            digitalWrite(ledPin,LOW);
+            check = true;
+    }
+    delay(500);
 }
 
 
