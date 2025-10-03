@@ -2,6 +2,7 @@
 #include <linux/usb.h>
 #include <linux/slab.h>
 #include <stdio.h>
+#include <string.h>
 
 MODULE_AUTHOR("DevTITANS <devtitans@icomp.ufam.edu.br>");
 MODULE_DESCRIPTION("Driver de acesso ao SmartLamp (ESP32 com Chip Serial CP2102)");
@@ -116,13 +117,14 @@ static void usb_disconnect(struct usb_interface *interface) {
 // Exemplo de uso: usb_write_serial("GET_LDR", 0);
 static int usb_write_serial(char *cmd, int param) {
     int ret, actual_size;
-
+    int message_len; 
     printk(KERN_INFO "SmartLamp: Enviando comando: %s %d\n", cmd, param);
     // TASK 2.2: Implemente o envio do comando para o dispositivo
     // Dica: Formate o comando no buffer usb_out_buffer e envie usando usb_bulk_msg
     // O formato esperado é: "COMANDO PARAMETRO\n"
     sprintf(usb_out_buffer,"%s %d \n",cmd, param);
-    ret = usb_bulk_msg(smartlamp_device,0,usb_out_buffer,usb_max_size,&actual_size,0);
+    message_len = strlen(usb_out_buffer);
+    ret = usb_bulk_msg(smartlamp_device,usb_out,usb_out_buffer,message_len,&actual_size,0);
     if (ret != 0){
 	printk(KERN_INFO "SmartLamp: Falha ao enviar o comando: %s %d\n", cmd,param);
 	return -1;
