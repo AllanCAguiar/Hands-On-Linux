@@ -5,7 +5,8 @@ int ledPin = 22;
 int ledValue;
 bool check = false;
 
-int ldrPin;
+int ldrPin = 34;
+int ldrValue;
 // Faça testes no sensor ldr para encontrar o valor maximo e atribua a variável ldrMax
 int ldrMax;
 
@@ -13,14 +14,17 @@ void setup() {
     Serial.begin(9600);
     pinMode(ledPin, OUTPUT);
     digitalWrite(ledPin,LOW); // Led inicia apagado.
-
     pinMode(ldrPin, INPUT);
     Serial.printf("SmartLamp Conectado!\n");
+    delay(1000);
     
 }
 
 // Função loop será executada infinitamente pelo ESP32
 void loop() {
+    ldrValue = analogRead(ldrPin);
+    serial.println(ldrValue);
+
     if(!check){
         /* Pisca 5x* e permanece apagado*/
         for(int i = 0; i < 5; i++){
