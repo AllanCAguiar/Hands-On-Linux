@@ -1,8 +1,6 @@
 #include <linux/module.h>
 #include <linux/usb.h>
 #include <linux/slab.h>
-#include <stdio.h>
-#include <string.h>
 
 MODULE_AUTHOR("DevTITANS <devtitans@icomp.ufam.edu.br>");
 MODULE_DESCRIPTION("Driver de acesso ao SmartLamp (ESP32 com Chip Serial CP2102)");
