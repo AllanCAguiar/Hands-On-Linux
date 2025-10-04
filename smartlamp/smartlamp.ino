@@ -68,7 +68,7 @@ void processCommand(String command) {
     }
   }
   else if (command == "GET_LED"){
-    Serial.print("RES SET_LED ");
+    Serial.print("RES GET_LED ");
     Serial.println(ledValue);
   }
   
