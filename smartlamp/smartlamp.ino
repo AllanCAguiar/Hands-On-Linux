@@ -4,6 +4,7 @@ int ldrPin = 36;
 int ldrMin = 0;
 int ldrMax = 4095;
 int threshold = 50;
+bool check = false;
 unsigned long previousTime = millis();
 unsigned long currentlyTime;
 
