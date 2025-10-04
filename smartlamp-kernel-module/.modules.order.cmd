@@ -1,1 +1,1 @@
-cmd_/home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/modules.order := {   echo /home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/probe_2025.ko; :; } | awk '!x[$$0]++' - > /home/devtitans-2/HandOn_IoT/Hands-On-Linux/smartlamp-kernel-module/modules.order
+cmd_/home/devtitans-2/iot/Hands-On-Linux/smartlamp-kernel-module/modules.order := {   echo /home/devtitans-2/iot/Hands-On-Linux/smartlamp-kernel-module/serial_write_2025.ko; :; } | awk '!x[$$0]++' - > /home/devtitans-2/iot/Hands-On-Linux/smartlamp-kernel-module/modules.order
