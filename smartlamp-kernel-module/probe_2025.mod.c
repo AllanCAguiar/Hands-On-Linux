@@ -1,7 +1,14 @@
 #include <linux/module.h>
-#include <linux/export-internal.h>
+#define INCLUDE_VERMAGIC
+#include <linux/build-salt.h>
+#include <linux/elfnote-lto.h>
+#include <linux/vermagic.h>
 #include <linux/compiler.h>
 
+BUILD_SALT;
+BUILD_LTO_INFO;
+
+MODULE_INFO(vermagic, VERMAGIC_STRING);
 MODULE_INFO(name, KBUILD_MODNAME);
 
 __visible struct module __this_module
@@ -14,51 +21,24 @@ __section(".gnu.linkonce.this_module") = {
 	.arch = MODULE_ARCH_INIT,
 };
 
-
+#ifdef CONFIG_RETPOLINE
+MODULE_INFO(retpoline, "Y");
+#endif
 
 static const struct modversion_info ____versions[]
 __used __section("__versions") = {
-	{ 0xe8213e80, "_printk" },
-	{ 0xcb8b6ec6, "kfree" },
-	{ 0x2bd64ad0, "usb_find_common_endpoints" },
-	{ 0xd710adbf, "__kmalloc_noprof" },
-	{ 0x4b24f11f, "usb_control_msg" },
-	{ 0xd272d446, "__stack_chk_fail" },
-	{ 0x056c43c7, "usb_deregister" },
-	{ 0xd272d446, "__fentry__" },
-	{ 0x8134d220, "usb_register_driver" },
-	{ 0xd272d446, "__x86_return_thunk" },
-	{ 0x70eca2ca, "module_layout" },
+	{ 0x3a907ee7, "module_layout" },
+	{ 0xd8d4127e, "usb_deregister" },
+	{ 0x41888d9, "usb_register_driver" },
+	{ 0xd0da656b, "__stack_chk_fail" },
+	{ 0x895e8b51, "usb_control_msg" },
+	{ 0xeb233a45, "__kmalloc" },
+	{ 0x93c7edeb, "usb_find_common_endpoints" },
+	{ 0x5b8239ca, "__x86_return_thunk" },
+	{ 0x37a0cba, "kfree" },
+	{ 0x92997ed8, "_printk" },
+	{ 0xbdfb6dbb, "__fentry__" },
 };
-
-static const u32 ____version_ext_crcs[]
-__used __section("__version_ext_crcs") = {
-	0xe8213e80,
-	0xcb8b6ec6,
-	0x2bd64ad0,
-	0xd710adbf,
-	0x4b24f11f,
-	0xd272d446,
-	0x056c43c7,
-	0xd272d446,
-	0x8134d220,
-	0xd272d446,
-	0x70eca2ca,
-};
-static const char ____version_ext_names[]
-__used __section("__version_ext_names") =
-	"_printk\0"
-	"kfree\0"
-	"usb_find_common_endpoints\0"
-	"__kmalloc_noprof\0"
-	"usb_control_msg\0"
-	"__stack_chk_fail\0"
-	"usb_deregister\0"
-	"__fentry__\0"
-	"usb_register_driver\0"
-	"__x86_return_thunk\0"
-	"module_layout\0"
-;
 
 MODULE_INFO(depends, "");
 

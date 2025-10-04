@@ -124,7 +124,7 @@ static int usb_write_serial(char *cmd, int param) {
     // O formato esperado é: "COMANDO PARAMETRO\n"
     sprintf(usb_out_buffer,"%s %d\n",cmd, param);
     message_len = strlen(usb_out_buffer);
-    ret = usb_bulk_msg(smartlamp_device,usb_out,usb_out_buffer,message_len,&actual_size,0);
+    ret = usb_bulk_msg(smartlamp_device,usb_sndbulkpipe(smartlamp_device, usb_out),usb_out_buffer,message_len,&actual_size,1000);
     if (ret != 0){
 	printk(KERN_INFO "SmartLamp: Falha ao enviar o comando: %s %d\n", cmd,param);
 	return -1;
