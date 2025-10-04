@@ -23,7 +23,7 @@ void setup() {
 // Função loop será executada infinitamente pelo ESP32
 void loop() {
     ldrValue = analogRead(ldrPin);
-    serial.println(ldrValue);
+    Serial.println(ldrValue);
 
     if(!check){
         /* Pisca 5x* e permanece apagado*/
