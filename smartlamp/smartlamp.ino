@@ -11,10 +11,25 @@ void setup() {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
   pinMode(ldrPin, INPUT);
+  // Led inicia apagado.
+  digitalWrite(ledPin,LOW); 
   Serial.printf("SmartLamp Conectado!\n");
 }
 
 void loop() {
+  if(!check) {
+/* Pisca 5x* e permanece apagado*/
+    for(int i = 0; i < 5; i++) {
+      digitalWrite(ledPin,HIGH);
+      delay(2000);
+
+      digitalWrite(ledPin, LOW);
+      delay(2000);
+    }
+    digitalWrite(ledPin,LOW);
+    check = true;
+  }
+
   currentlyTime = millis();
   if (currentlyTime - previousTime >= 2000) {
     processCommand("GET_LDR");
