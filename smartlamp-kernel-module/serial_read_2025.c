@@ -15,8 +15,8 @@ static uint usb_in, usb_out;                       // Endereços das portas de e
 static char *usb_in_buffer, *usb_out_buffer;       // Buffers de entrada e saída da USB
 static int usb_max_size;                           // Tamanho máximo de uma mensagem USB
 
-#define VENDOR_ID   SUBSTITUA_PELO_VENDORID /* Encontre o VendorID  do smartlamp */
-#define PRODUCT_ID  SUBSTITUA_PELO_PRODUCTID /* Encontre o ProductID do smartlamp */
+#define VENDOR_ID  0x10C4  /* Encontre o VendorID  do smartlamp */
+#define PRODUCT_ID  0xEA60 /* Encontre o ProductID do smartlamp */
 static const struct usb_device_id id_table[] = { { USB_DEVICE(VENDOR_ID, PRODUCT_ID) }, {} };
 
 static int  usb_probe(struct usb_interface *ifce, const struct usb_device_id *id); // Executado quando o dispositivo é conectado na USB
@@ -101,10 +101,10 @@ static int usb_probe(struct usb_interface *interface, const struct usb_device_id
     // TASK 2.3: Leitura de dados periódicos enviados pelo firmware
     // O firmware envia RES GET_LDR Z automaticamente a cada 2 segundos
     // Descomente as linhas abaixo após implementar usb_read_serial
-    // ret = usb_read_serial();
-    // if (ret >= 0) {
-    //     printk(KERN_INFO "SmartLamp: Valor do LDR recebido: %d\n", ret);
-    // }
+    ret = usb_read_serial();
+    if (ret >= 0) {
+      printk(KERN_INFO "SmartLamp: Valor do LDR recebido: %d\n", ret);
+    }
 
     return 0;
 }
@@ -144,24 +144,26 @@ static int usb_write_serial(char *cmd, int param) {
 // Exemplo de resposta: "RES GET_LDR 450\n" -> retorna 450
 // Exemplo de resposta: "RES SET_LED 1\n" -> retorna 1
 static int usb_read_serial(void) {
-    int ret, actual_size;
+    int actual_size = 0;
     int recv_size = 0;  // Quantidade de caracteres já recebidos em recv_line
-    int i;
-
+    int i = 0;
+    int parameter = 0;
+    memset(recv_line, '\0', sizeof(recv_line));
     printk(KERN_INFO "SmartLamp: Aguardando resposta do dispositivo...\n");
 
-    // TASK 2.3: Implemente a leitura de dados da porta serial
-    //
-    // IMPORTANTE: Os dados podem chegar fragmentados (byte a byte ou em blocos)
-    // Você deve acumular os dados em recv_line até encontrar o caractere '\n'
-    //
-    // Dicas:
-    // - Use um loop para continuar lendo até encontrar '\n'
-    // - Use usb_bulk_msg com usb_rcvbulkpipe para cada leitura
-    // - Copie os dados de usb_in_buffer para recv_line
-    // - Cuidado com buffer overflow: verifique recv_size < MAX_RECV_LINE
-    // - Defina um timeout adequado (ex: 2000ms)
-    // - Após receber a linha completa, extraia o valor numérico com sscanf
-
+    while(recv_size < MAX_RECV_LINE) {
+      usb_bulk_msg(smartlamp_device, usb_rcvbulkpipe(smartlamp_device, usb_in), usb_in_buffer, MAX_RECV_LINE, &actual_size, 2500);
+      strcat(recv_line, usb_in_buffer);
+      for (i = recv_size; i < recv_size + actual_size; i++) {
+        if (recv_line[i] == '\n') {
+            recv_line[i + 1] = '\0';
+            printk(KERN_INFO "SmartLamp: %s", recv_line);        
+            sscanf(recv_line, "%*s %*s %d", &parameter);
+            return parameter;   
+        }   
+      }
+      recv_size += actual_size;
+    }
+    printk(KERN_INFO "SmartLamp: Erro \n");  
     return -1;
 }

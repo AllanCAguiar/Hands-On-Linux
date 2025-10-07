@@ -1,10 +1,9 @@
 int ledPin = 22;
-int ledValue = 50;
+int ledValue = 20;
 int ldrPin = 36;
 int ldrMin = 0;
 int ldrMax = 4095;
 int threshold = 50;
-bool check = false;
 unsigned long previousTime = millis();
 unsigned long currentlyTime;
 
@@ -18,26 +17,13 @@ void setup() {
 }
 
 void loop() {
-  if(!check) {
-/* Pisca 5x* e permanece apagado*/
-    for(int i = 0; i < 5; i++) {
-      digitalWrite(ledPin,HIGH);
-      delay(2000);
-
-      digitalWrite(ledPin, LOW);
-      delay(2000);
-    }
-    digitalWrite(ledPin,LOW);
-    check = true;
-  }
-
   currentlyTime = millis();
   if (currentlyTime - previousTime >= 2000) {
     processCommand("GET_LDR");
     previousTime = currentlyTime;
   }
   
-  while (Serial.available() > 0) {
+  if (Serial.available() > 0) {
     String in = Serial.readStringUntil('\n');
     processCommand(in);
   }

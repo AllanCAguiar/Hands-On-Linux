@@ -1,4 +1,4 @@
-obj-m += serial_write_2025.o
+obj-m += serial_read_2025.o
 PWD := $(CURDIR)
 
 all:
