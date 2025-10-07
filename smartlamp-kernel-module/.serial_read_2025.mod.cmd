@@ -1,0 +1,1 @@
+cmd_/home/devtitans-2/Allan/IOT/Hands-On-Linux/smartlamp-kernel-module/serial_read_2025.mod := { echo  /home/devtitans-2/Allan/IOT/Hands-On-Linux/smartlamp-kernel-module/serial_read_2025.o;  echo; } > /home/devtitans-2/Allan/IOT/Hands-On-Linux/smartlamp-kernel-module/serial_read_2025.mod
